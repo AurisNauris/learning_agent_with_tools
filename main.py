@@ -34,48 +34,8 @@ tools = [
 
 client = anthropic.Anthropic()
 
-# response = client.messages.create(model="claude-haiku-4-5-20251001",
-#                                   max_tokens=1024,
-#                                   tools=tools,
-#                                   messages=[
-#                                       {
-#                                       "role":"user",
-#                                       "content":"What is 347*23?"
-#                                      }])
-
-# if response.stop_reason == "tool_use":
-#     tool_block = response.content[0]
-#     tool_name = tool_block.name
-#     tool_input = tool_block.input
-    
-#     if tool_name == "calculator":
-#         result = str(eval(tool_input["expression"]))
-# else:
-#     print("failed tool use")
-#     sys.exit()
-
-# followup = client.messages.create(model="claude-haiku-4-5-20251001",
-#                                   max_tokens=1024,
-#                                   tools=tools,
-#                                   messages=[
-#                                       {"role":"user", "content":"What is 347*23?"},
-#                                       {"role":"assistant", "content":response.content},
-#                                       {"role":"user",
-#                                        "content": [
-#                                            {"type":"tool_result",
-#                                             "tool_use_id": tool_block.id,
-#                                             "content":result
-#                                             }
-#                                        ]}
-#                                   ])
-
-# print(followup.content[0].text)
-# print(followup)
-
 i = 0
 prompt = []
-# prompt.append({"role":"user",
-#                "content":"What is the weather in Dresden? and what is the temperature times 3?" })
 
 while True:
 
@@ -104,6 +64,7 @@ while True:
             break
 
         if response.stop_reason == "tool_use":
+            print("Tool used")
             tool_block = None
             for block in response.content:
                 if block.type == "tool_use":
